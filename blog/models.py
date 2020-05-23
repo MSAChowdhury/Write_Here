@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils import timezone
-from django.core.urlsolvers import reverse
+from django.urls import reverse
 # Create your models here.
 class post(models.Model):
     author = models.ForeignKey('auth.User')
@@ -36,6 +36,6 @@ class Comment(models.Model):
 
     def get_absolute_url(self):
         return reverse('post_list')
-        
+
     def __str__(self):
         return self.text
