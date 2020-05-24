@@ -1,7 +1,7 @@
-from django import forms
+from django.forms import ModelFrom
 from .models import post,Comment
 
-class PostFrom(forms.ModelFrom):
+class PostFrom(ModelFrom):
 
     class Meta:
         model = post
@@ -13,7 +13,7 @@ class PostFrom(forms.ModelFrom):
 
         }
 
-class CommentFrom(forms.ModelFrom):
+class CommentFrom(ModelFrom):
 
     class Meta:
         model = Comment

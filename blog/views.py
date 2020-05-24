@@ -12,7 +12,7 @@ DeleteView)
 class AboutView(TemplateView):
     template_name = 'about.html'
 
-class PostListView():
+class PostListView(ListView):
     model = post
 
     def get_queryset(self):
@@ -56,11 +56,13 @@ def post_publish(request,pk):
 @login_required
 def add_comment(request,pk):
     post = get_object_or_404(post,pk=pk)
-    if form.is_valid():
-        comment = form.save(commit=False)
-        comment.post = post
-        comment.save()
-        return redirect('post_detail',pk=post.pk)
+    if request.method == "POST":
+        form = CommentFrom(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.save()
+            return redirect('post_detail',pk=post.pk)
     else:
         form = CommentFrom()
     return render(request,'blog/comment_form.html',{'form':form})
