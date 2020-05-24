@@ -1,7 +1,8 @@
-from django.forms import ModelFrom
-from .models import post,Comment
+from django import forms
+from django.forms import ModelForm
+from blog.models import post,Comment
 
-class PostFrom(ModelFrom):
+class PostFrom(ModelForm):
 
     class Meta:
         model = post
@@ -13,7 +14,7 @@ class PostFrom(ModelFrom):
 
         }
 
-class CommentFrom(ModelFrom):
+class CommentFrom(ModelForm):
 
     class Meta:
         model = Comment
