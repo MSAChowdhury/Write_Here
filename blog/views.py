@@ -3,6 +3,7 @@ from django.utils import timezone
 from blog.models import post,Comment
 from blog.forms import PostFrom,CommentFrom
 from django.contrib.auth.decorators import  login_required
+from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import (TemplateView,ListView,DetailView,CreateView,UpdateView,
 DeleteView)
@@ -22,14 +23,14 @@ class PostDetails(DetailView):
 
 class CreatePostView(LoginRequiredMixin,CreateView):
     login_url = '/login/'
-    redirect  = 'blog\post_detail.html'
+    redirect  = 'blog/post_detail.html'
 
     form_class = PostFrom
     model = post
 
 class PostUpdateView(LoginRequiredMixin,UpdateView):
     login_url = '/login/'
-    redirect  = 'blog\post_detail.html'
+    redirect  = 'blog/post_detail.html'
 
     form_class = PostFrom
     model = post
@@ -40,7 +41,7 @@ class PostDeleteView(LoginRequiredMixin,DeleteView):
 
 class DraftListView(LoginRequiredMixin,ListView):
         login_url = '/login/'
-        redirect  = 'blog\post_list.html'
+        redirect  = 'blog/post_list.html'
         model = post
 
         def get_queryset(self):
@@ -49,11 +50,11 @@ class DraftListView(LoginRequiredMixin,ListView):
 @login_required
 def post_publish(request,pk):
     post = get_object_or_404(post,pk=pk)
-    post.publish
-    return redirect('post_detail')
+    post.publish()
+    return redirect('post_detail',pk=pk)
 
 @login_required
-def add_cooment(request,pk):
+def add_comment(request,pk):
     post = get_object_or_404(post,pk=pk)
     if form.is_valid():
         comment = form.save(commit=False)
